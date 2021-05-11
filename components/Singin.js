@@ -2,23 +2,48 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { MaterialCommunityIcons, AntDesign, FontAwesome5 } from '@expo/vector-icons'
 import InputComponent from './InputComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import restapi from './url/url';
+import { useRoute, useNavigation } from '@react-navigation/native'
 
 
 const Singin = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = () => {
-        const body = {
-            email: email,
-            password: password
+    const navigation = useNavigation();
+
+    const handleSubmit = async () => {
+        try {
+            const body = {
+                email: email,
+                password: password
+            }
+            const response = await fetch(restapi.carna + '/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            })
+
+            const data = await response.json()
+            console.log('>>>>', data.token);
+
+
+            if (data.token) {
+                await AsyncStorage.setItem('token', data.token);
+                props.setLogged(true)
+                navigation.navigate("home");
+            } else {
+                console.log(data.response);
+            }
+
+        } catch (error) {
+            console.error(error.message);
         }
-        props.signin(body)
 
         setEmail('')
         setPassword('')
-        console.log('user logged in');
-        props.navigation.navigate('HomeOption')
+
     }
     return (
         <TouchableWithoutFeedback onPress={() => {

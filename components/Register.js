@@ -17,7 +17,7 @@ const Register = (props) => {
             email: email,
             password: password
         }
-        props.register(data)
+
         setUserName('')
         setEmail('')
         setPassword('')

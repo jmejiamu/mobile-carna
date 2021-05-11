@@ -39,6 +39,7 @@ const Driver = ({ navigation }) => {
 
     }, [])
     const LoginScreens = (props) => <Singin {...props} setLogged={setAuth} />
+    const RegisterScreens = (props) => <Register {...props} setLogged={setAuth} />
     const HomeScreens = (props) => <Home {...props} setLogged={setAuth} />
     return (
 
@@ -73,7 +74,7 @@ const Driver = ({ navigation }) => {
 
                         <Stack.Screen
                             name="Register"
-                            component={Register}
+                            component={RegisterScreens}
                             options={{
                                 headerTintColor: 'white',
                                 headerStyle: { backgroundColor: '#1D1B28' }

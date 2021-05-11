@@ -1,28 +1,66 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 import InputComponent from './InputComponent';
 import { MaterialCommunityIcons, AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import restapi from './url/url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRoute, useNavigation } from '@react-navigation/native'
 
 const Register = (props) => {
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const navigation = useNavigation();
 
-    // console.log(props.register);
 
-    const handleSubmit = () => {
-        const data = {
-            name: userName,
-            email: email,
-            password: password
+    const handleSubmit = async () => {
+        try {
+            // Object to be sent to the back end
+            let defaultPicture = 'https://irokonews.com/wp-content/uploads/2020/06/Capture-3-400x289.png';
+            const body = {
+                name: userName,
+                email: email,
+                password: password,
+                picture: defaultPicture
+            }
+
+            const response = await fetch(restapi.carna + '/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
+
+            // Getting the response  recieved from the server
+            const data = await response.json();
+
+            console.log(data, '>>>>>>>');
+
+            // if the token exist save it the local storage
+            if (data.token) {
+                AsyncStorage.setItem('token', data.token)
+
+                props.setLogged(true)
+                navigation.replace("home")
+            } else {
+                props.setLogged(false)
+                Alert.alert("Check", data.response);
+
+            }
+            setUserName('')
+            setEmail('')
+            setPassword('')
+        } catch (error) {
+            console.error(error.message);
         }
 
-        setUserName('')
-        setEmail('')
-        setPassword('')
 
     }
+
+
+
 
     return (
         <TouchableWithoutFeedback onPress={() => {

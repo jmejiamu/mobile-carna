@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 import { MaterialCommunityIcons, AntDesign, FontAwesome5 } from '@expo/vector-icons'
 import InputComponent from './InputComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,8 +32,9 @@ const Singin = (props) => {
             if (data.token) {
                 await AsyncStorage.setItem('token', data.token);
                 props.setLogged(true)
-                navigation.navigate("home");
+                navigation.replace("home");
             } else {
+                Alert.alert("Please", data.response)
                 console.log(data.response);
             }
 

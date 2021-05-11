@@ -20,15 +20,6 @@ const Driver = ({ navigation }) => {
     const setAuth = (boolean) => {
         setAuthenticated(boolean);
     }
-    // const detectLogin = async () => {
-    //     const token = await AsyncStorage.getItem('token')
-    //     console.log(token);
-    //     if (token) {
-    //         setHasToken(true)
-    //     } else {
-    //         setHasToken(false)
-    //     }
-    // }
 
     const isAuth = async () => {
         try {
@@ -44,7 +35,6 @@ const Driver = ({ navigation }) => {
         }
     }
     useEffect(() => {
-        // detectLogin()
         isAuth()
 
     }, [])

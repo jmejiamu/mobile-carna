@@ -8,7 +8,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from '../screens/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import restapi from '../url/url';
-import LoadingScreen from '../screens/LoadingScreen';
+import EnglishLecture from '../screens/EnglishLecture';
+
 
 
 
@@ -16,7 +17,6 @@ const Stack = createStackNavigator();
 const Driver = ({ navigation }) => {
     const [isloggedin, setLogged] = useState(null)
     const [isAuthenticated, setAuthenticated] = useState(false);
-    // const [hasToken, setHasToken] = useState(false)
     const setAuth = (boolean) => {
         setAuthenticated(boolean);
     }
@@ -49,6 +49,13 @@ const Driver = ({ navigation }) => {
                         <Stack.Screen
                             name="home"
                             component={HomeScreens}
+                            options={{
+                                headerTintColor: 'white',
+                                headerStyle: { backgroundColor: '#1D1B28' }
+                            }} />
+                        <Stack.Screen
+                            name="english"
+                            component={EnglishLecture}
                             options={{
                                 headerTintColor: 'white',
                                 headerStyle: { backgroundColor: '#1D1B28' }

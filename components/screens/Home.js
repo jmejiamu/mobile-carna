@@ -3,7 +3,8 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import {
     StyleSheet, Text, View, Button, Image,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native'
 import restapi from '../url/url'
 import { useRoute, useNavigation } from '@react-navigation/native'
@@ -47,32 +48,39 @@ const Home = (props) => {
         })
     }
     return (
+        <ScrollView>
 
-        <View style={styles.container}>
-            <View style={styles.header}></View>
-            <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
-            <View style={styles.body}>
-                <View style={styles.bodyContent}>
-                    <Text style={styles.name}>John Doe</Text>
-                    <Text style={styles.info}>UX Designer / Mobile developer</Text>
-                    <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
 
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text>Opcion 1</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text>Opcion 2</Text>
-                    </TouchableOpacity>
+            <View style={styles.container}>
+                <View style={styles.header}></View>
+                <Image style={styles.avatar} source={{ uri: `${picture}` }} />
+                <View style={styles.body}>
+
+                    <View style={styles.bodyContent}>
+                        <Text style={styles.name}>{userName}</Text>
+                        <Text style={styles.info}>Cybersecurity / Mobile developer</Text>
+                        <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
+
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => navigation.navigate("english")}
+                        >
+                            <Text>English Course</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonContainer}>
+                            <Text>Spanish</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => logout()}
+                        >
+                            <Text>LOGOUT</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
-                <Text>{userName}</Text>
-                <Button
-                    title="logout"
-                    mode="contained"
-                    style={{ marginLeft: 18, marginRight: 18, marginTop: 18 }}
-                    onPress={() => logout()}
-                />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 export default Home;

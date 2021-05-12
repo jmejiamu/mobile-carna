@@ -9,6 +9,7 @@ import Home from '../screens/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import restapi from '../url/url';
 import EnglishLecture from '../screens/EnglishLecture';
+import Lectures from '../screens/Lectures';
 
 
 
@@ -41,6 +42,7 @@ const Driver = ({ navigation }) => {
     const LoginScreens = (props) => <Singin {...props} setLogged={setAuth} />
     const RegisterScreens = (props) => <Register {...props} setLogged={setAuth} />
     const HomeScreens = (props) => <Home {...props} setLogged={setAuth} />
+    const LecuterScreens = (props) => <Lectures {...props} setLogged={setAuth} />
     return (
 
         <NavigationContainer>
@@ -57,6 +59,13 @@ const Driver = ({ navigation }) => {
                         <Stack.Screen
                             name="english"
                             component={EnglishLecture}
+                            options={{
+                                headerTintColor: 'white',
+                                headerStyle: { backgroundColor: '#1D1B28' }
+                            }} />
+                        <Stack.Screen
+                            name="lecture"
+                            component={LecuterScreens}
                             options={{
                                 headerTintColor: 'white',
                                 headerStyle: { backgroundColor: '#1D1B28' }

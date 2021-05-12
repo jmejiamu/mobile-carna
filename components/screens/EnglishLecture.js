@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native'
 import restapi from '../url/url';
 
+import { useRoute, useNavigation } from '@react-navigation/native'
+
 const EnglishLecture = () => {
 
+    const navigation = useNavigation();
     const [contentData, setContentData] = useState([]);
     const getData = async () => {
         try {
@@ -27,7 +30,7 @@ const EnglishLecture = () => {
 
             renderItem={({ item }) => {
                 return (
-                    <TouchableOpacity style={styles.card} >
+                    <TouchableOpacity style={styles.card} onPress={() => { navigation.navigate('lecture', { id: item.id }) }} >
                         <Image style={styles.image} source={{ uri: 'https://img.icons8.com/clouds/100/000000/groups.png' }} />
                         <View style={styles.cardContent}>
                             <Text style={styles.name}>{item.title}</Text>

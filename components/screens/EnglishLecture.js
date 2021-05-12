@@ -34,7 +34,7 @@ const EnglishLecture = () => {
                         <Image style={styles.image} source={{ uri: 'https://img.icons8.com/clouds/100/000000/groups.png' }} />
                         <View style={styles.cardContent}>
                             <Text style={styles.name}>{item.title}</Text>
-                            {/* <Text style={styles.count}>{item.content}</Text> */}
+                            <Text style={styles.count}>Basic Lecture</Text>
                             <TouchableOpacity style={styles.followButton}>
                                 <Text style={styles.followButtonText}>Explore now</Text>
                             </TouchableOpacity>

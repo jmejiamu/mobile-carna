@@ -14,3 +14,8 @@
 
 ### Profile
 ![profile](https://user-images.githubusercontent.com/27458911/118072136-1412b480-b35e-11eb-8334-b7bfa34f51ca.png)
+
+# Technologies used
+* React Native
+* Hooks
+

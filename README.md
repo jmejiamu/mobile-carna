@@ -18,4 +18,5 @@
 # Technologies used
 * React Native
 * Hooks
+* JWT
 

@@ -13,16 +13,16 @@ import {
   AntDesign,
   FontAwesome5,
 } from "@expo/vector-icons";
-import InputComponent from "./InputComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import restapi from "./url/url";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import restapi from "../../../../components/url/url";
+import { useRouter } from "expo-router";
+import MainInput from "@/src/components/MainInput/MainInput";
 
-const Singin = (props) => {
+const SignInScreen = () => {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const navigation = useNavigation();
 
   const handleSubmit = async () => {
     try {
@@ -40,14 +40,13 @@ const Singin = (props) => {
 
       if (data.token) {
         await AsyncStorage.setItem("token", data.token);
-        props.setLogged(true);
-        navigation.replace("home");
+        router.replace("/home");
       } else {
         Alert.alert("Please", data.response);
         console.log(data.response);
       }
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
 
     setEmail("");
@@ -71,8 +70,7 @@ const Singin = (props) => {
               color="white"
             />
 
-            <InputComponent
-              // style={styles.inputStyle}
+            <MainInput
               placeholder="Email"
               keyboardType="email-address"
               placeholderTextColor="gray"
@@ -81,10 +79,9 @@ const Singin = (props) => {
             />
           </View>
           <View style={styles.iconStyles}>
-            <AntDesign name="lock1" size={24} color="white" />
+            <AntDesign name="lock" size={24} color="white" />
 
-            <InputComponent
-              // style={styles.inputStyle}
+            <MainInput
               placeholder="Password"
               secureTextEntry={true}
               placeholderTextColor="gray"
@@ -101,9 +98,7 @@ const Singin = (props) => {
             <Text style={styles.textSingStyle}>Sign In</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate("Register")}
-          >
+          <TouchableOpacity onPress={() => router.push("/register")}>
             <Text style={styles.textSingStyle}>Register Here!</Text>
           </TouchableOpacity>
         </View>
@@ -122,16 +117,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 50,
   },
-  // inputStyle: {
-  //     height: 40,
-  //     borderColor: 'gray',
-  // borderBottomWidth: 4,
-  //     padding: 10,
-  //     // marginBottom: 15,
-  //     color: "white",
-  //     width: "100%",
-  //     marginLeft: 5
-  // },
   siginButtonStyle: {
     padding: 10,
     backgroundColor: "#1D1B28",
@@ -156,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Singin;
+export default SignInScreen;

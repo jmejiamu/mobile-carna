@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
   StyleSheet,
+  Text,
+  View,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
@@ -13,46 +13,57 @@ import {
   AntDesign,
   FontAwesome5,
 } from "@expo/vector-icons";
-import InputComponent from "./InputComponent";
+import restapi from "../../../../components/url/url";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import restapi from "./url/url";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
+import MainInput from "@/src/components/MainInput/MainInput";
 
-const Singin = (props) => {
+const RegisterScreen = () => {
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const handleSubmit = async () => {
     try {
+      // Object to be sent to the back end
+      let defaultPicture =
+        "https://irokonews.com/wp-content/uploads/2020/06/Capture-3-400x289.png";
       const body = {
+        name: userName,
         email: email,
         password: password,
+        picture: defaultPicture,
       };
-      const response = await fetch(restapi.carna + "/signin", {
+
+      const response = await fetch(restapi.carna + "/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(body),
       });
 
+      // Getting the response  recieved from the server
       const data = await response.json();
 
+      // if the token exist save it the local storage
       if (data.token) {
         await AsyncStorage.setItem("token", data.token);
-        props.setLogged(true);
-        navigation.replace("home");
-      } else {
-        Alert.alert("Please", data.response);
-        console.log(data.response);
-      }
-    } catch (error) {
-      console.error(error.message);
-    }
 
-    setEmail("");
-    setPassword("");
+        router.replace("/home");
+      } else {
+        Alert.alert("Check", data.response);
+      }
+      setUserName("");
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -65,14 +76,22 @@ const Singin = (props) => {
             <FontAwesome5 name="user-circle" size={40} color="white" />
           </View>
           <View style={styles.iconStyles}>
+            <FontAwesome5 name="user" size={24} color="white" />
+            <MainInput
+              placeholder="User name"
+              placeholderTextColor="gray"
+              value={userName}
+              onChangeText={(e) => setUserName(e)}
+            />
+          </View>
+          <View style={styles.iconStyles}>
             <MaterialCommunityIcons
               name="email-outline"
               size={24}
               color="white"
             />
 
-            <InputComponent
-              // style={styles.inputStyle}
+            <MainInput
               placeholder="Email"
               keyboardType="email-address"
               placeholderTextColor="gray"
@@ -81,10 +100,9 @@ const Singin = (props) => {
             />
           </View>
           <View style={styles.iconStyles}>
-            <AntDesign name="lock1" size={24} color="white" />
+            <AntDesign name="lock" size={24} color="white" />
 
-            <InputComponent
-              // style={styles.inputStyle}
+            <MainInput
               placeholder="Password"
               secureTextEntry={true}
               placeholderTextColor="gray"
@@ -98,13 +116,15 @@ const Singin = (props) => {
             style={styles.siginButtonStyle}
             onPress={handleSubmit}
           >
-            <Text style={styles.textSingStyle}>Sign In</Text>
+            <Text style={styles.textSingStyle}>Register</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => props.navigation.navigate("Register")}
+            onPress={() => {
+              router.push("/");
+            }}
           >
-            <Text style={styles.textSingStyle}>Register Here!</Text>
+            <Text style={styles.textSingStyle}>Sign in Here</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -112,26 +132,14 @@ const Singin = (props) => {
   );
 };
 
+export default RegisterScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#262432",
     justifyContent: "center",
   },
-  inputStyle: {
-    marginLeft: 20,
-    marginRight: 50,
-  },
-  // inputStyle: {
-  //     height: 40,
-  //     borderColor: 'gray',
-  // borderBottomWidth: 4,
-  //     padding: 10,
-  //     // marginBottom: 15,
-  //     color: "white",
-  //     width: "100%",
-  //     marginLeft: 5
-  // },
   siginButtonStyle: {
     padding: 10,
     backgroundColor: "#1D1B28",
@@ -147,6 +155,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 60,
   },
+  inputStyle: {
+    marginLeft: 20,
+    marginRight: 50,
+  },
   logoStyle: {
     color: "white",
     textAlign: "center",
@@ -155,5 +167,3 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
 });
-
-export default Singin;

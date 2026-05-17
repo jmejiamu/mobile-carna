@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 
-import restapi from "../../../../components/url/url";
+import restapi from "../../../config/url";
 import { useLocalSearchParams } from "expo-router";
 
 interface LectureData {

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import restapi from "../../../../components/url/url";
+import restapi from "../../../config/url";
 import { useRouter } from "expo-router";
 
 const ProfileScreen = () => {

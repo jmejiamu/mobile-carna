@@ -14,7 +14,7 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import restapi from "../../../../components/url/url";
+import restapi from "../../../config/url";
 import { useRouter } from "expo-router";
 import MainInput from "@/src/components/MainInput/MainInput";
 

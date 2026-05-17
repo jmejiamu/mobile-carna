@@ -13,7 +13,7 @@ import {
   AntDesign,
   FontAwesome5,
 } from "@expo/vector-icons";
-import restapi from "../../../../components/url/url";
+import restapi from "../../../config/url";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import MainInput from "@/src/components/MainInput/MainInput";

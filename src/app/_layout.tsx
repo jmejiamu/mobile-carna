@@ -1,13 +1,12 @@
-// import { persistor, RootState, store } from "@/src/store/store";
+import { persistor, RootState, store } from "@/src/store/store";
 import { Stack } from "expo-router";
-// import { Provider, useSelector } from "react-redux";
-// import { PersistGate } from "redux-persist/integration/react";
+import { Provider, useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 function Navigation() {
-  // const isAuthenticated = useSelector(
-  //   (state: RootState) => state.auth.isAuthenticated,
-  // );
-  const isAuthenticated = true;
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated,
+  );
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -23,12 +22,10 @@ function Navigation() {
 
 export default function RootLayout() {
   return (
-    // <Provider store={store}>
-    //   <PersistGate persistor={persistor} loading={null}>
-    //     <Navigation />
-    //   </PersistGate>
-    // </Provider>
-
-    <Navigation />
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <Navigation />
+      </PersistGate>
+    </Provider>
   );
 }
